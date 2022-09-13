@@ -184,6 +184,12 @@ class Convert {
         return OverlayImage.fromAsset(key);
     }
 
+    static OverlayImage toOverlayImageFromBitmap(Object o) {
+        byte[] bytes = (byte[]) o;
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        return OverlayImage.fromBitmap(bitmap);
+    }
+
     static List<LatLng> toCoords(Object o) {
         final List<?> data = (List) o;
         final List<LatLng> points = new ArrayList<>(data.size());
