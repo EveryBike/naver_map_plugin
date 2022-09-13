@@ -3,7 +3,8 @@ package map.naver.plugin.net.lbstech.naver_map_plugin;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.PointF;
-
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.geometry.LatLngBounds;
 import com.naver.maps.map.CameraPosition;
