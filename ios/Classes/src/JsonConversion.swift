@@ -83,13 +83,8 @@ public func toOverlayImage(assetName: String, registrar: FlutterPluginRegistrar)
 }
 
 public func toOverlayImageFromBitmap(bitmap: [UInt8]) -> NMFOverlayImage? {
-    let uiImage = UIImage(data: Data.init(bytes: bitmap))
-    if (uiImage != nil) {
-        return NMFOverlayImage(image: uiImage)
-    } else {
-        return nil
-    }
-
+    guard let uiImage = UIImage(data: Data.init(bytes: bitmap)) else { return nil }
+    return NMFOverlayImage(image: uiImage)
 }
 
 // ============================= 객체를 json 으로 =================================
