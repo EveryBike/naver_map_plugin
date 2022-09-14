@@ -106,6 +106,10 @@ class NMarkerController: NSObject {
            let overlayImage = toOverlayImage(assetName:assetName, registrar: registrar) {
             marker.iconImage = overlayImage
         }
+        if let bitmap = json["bitmap"] as? String,
+           let overlayImage = toOverlayImageFromBitmap(bitmap: bitmap) {
+            marker.iconImage = overlayImage
+        }
         if let infoWindowText = json["infoWindow"] as? String {
             self.infoWindowTitle = infoWindowText
         }
