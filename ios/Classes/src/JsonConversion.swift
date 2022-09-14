@@ -82,8 +82,8 @@ public func toOverlayImage(assetName: String, registrar: FlutterPluginRegistrar)
     return NMFOverlayImage(name: assetPath)
 }
 
-public func toOverlayImageFromBitmap(bitmap: [UInt8]) -> NMFOverlayImage? {
-    guard let uiImage = UIImage(data: Data.init(bytes: bitmap)) else { return nil }
+public func toOverlayImageFromBitmap(bitmapBytes: FlutterStandardTypedData) -> NMFOverlayImage? {
+    guard let uiImage = UIImage(data: Data(bitmapBytes.data)) else { return nil }
     return NMFOverlayImage(image: uiImage)
 }
 

@@ -106,7 +106,7 @@ class NMarkerController: NSObject {
            let overlayImage = toOverlayImage(assetName:assetName, registrar: registrar) {
             marker.iconImage = overlayImage
         }
-        if let bitmap = json["bitmap"] as? [UInt8],
+        if let bitmap = json["bitmap"] as? FlutterStandardTypedData,
            let overlayImage = toOverlayImageFromBitmap(bitmap: bitmap) {
             marker.iconImage = overlayImage
         }
