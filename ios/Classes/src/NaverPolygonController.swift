@@ -25,6 +25,7 @@ class NPolygonController: NSObject {
     
     func interpret(json: NSDictionary) {
         var shape = NMGPolygon<AnyObject>()
+        var line = NMGLineString<AnyObject>(points: [])
         if let coordData = json["coords"] as? Array<Any>, coordData.count > 2 {
             var coords : Array<AnyObject> = []
             coordData.forEach { (latLngData) in
@@ -33,8 +34,7 @@ class NPolygonController: NSObject {
             if toLatLng(json: coordData.first!) != toLatLng(json: coordData.last!) {
                 coords.append(toLatLng(json: coordData.first!))
             }
-            let line = NMGLineString(points: coords)
-            shape = NMGPolygon(ring: line)
+            line = NMGLineString(points: coords)
         }
         if let color = json["color"] as? NSNumber {
             polygonOverlay.fillColor = toColor(colorNumber: color)
@@ -49,6 +49,7 @@ class NPolygonController: NSObject {
             polygonOverlay.globalZIndex = globalZIndex
         }
         if let holeData = json["holes"] as? Array<Any> {
+            var holes : Array<NMGLineString<AnyObject>> = []
             holeData.forEach { data in
                 if let coordData =  data as? Array<Any> {
                     var coords : Array<NMGLatLng> = []
@@ -58,9 +59,10 @@ class NPolygonController: NSObject {
                     if coords.first != coords.last {
                         coords.append(toLatLng(json: coordData.first!))
                     }
-                    shape.addInteriorRing(NMGLineString(points: coords))
+                    holes.append(NMGLineString(points: coords))
                 }
             }
+            shape = NMGPolygon(ring: line, interiorRings: holes)
         }
         polygonOverlay.polygon = shape
     }
