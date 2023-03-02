@@ -77,7 +77,7 @@ NaverMap.OnMapTwoFingerTapListener,
         arguments.put("position", Convert.latLngToJson(symbol.getPosition()));
         arguments.put("caption", symbol.getCaption());
         channel.invokeMethod("map#onSymbolClick", arguments);
-        return true;
+        return false;
     }
 
     @Override
@@ -130,7 +130,6 @@ NaverMap.OnMapTwoFingerTapListener,
             final Map<String, Object> arguments = new HashMap<>(2);
             arguments.put("pathId", controller.id);
             channel.invokeMethod("path#onTap", arguments);
-            return true;
         } else if (overlay instanceof CircleOverlay) {
             NaverCircleController.CircleController controller =
                     (NaverCircleController.CircleController) overlay.getTag();
@@ -139,7 +138,6 @@ NaverMap.OnMapTwoFingerTapListener,
             final Map<String, Object> arguments = new HashMap<>(2);
             arguments.put("overlayId", controller.id);
             channel.invokeMethod("circle#onTap", arguments);
-            return true;
         } else if (overlay instanceof PolygonOverlay) {
             NaverPolygonController.PolygonController controller =
                     (NaverPolygonController.PolygonController) overlay.getTag();

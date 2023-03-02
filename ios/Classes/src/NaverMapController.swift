@@ -383,15 +383,12 @@ class NaverMapController: NSObject, FlutterPlatformView, NaverMapOptionSink, NMF
         } else if let path = overlay.userInfo["path"] as? NPathController {
             channel?.invokeMethod("path#onTap",
                                   arguments: ["pathId" , path.id])
-            return true
         } else if let circle = overlay.userInfo["circle"] as? NCircleController{
             channel?.invokeMethod("circle#onTap",
                                   arguments: ["overlayId" : circle.id])
-            return true
         } else if let polygon = overlay.userInfo["polygon"] as? NPolygonController {
             channel?.invokeMethod("polygon#onTap",
                                   arguments: ["polygonOverlayId" : polygon.id])
-            return true
         }
         return false
     }
