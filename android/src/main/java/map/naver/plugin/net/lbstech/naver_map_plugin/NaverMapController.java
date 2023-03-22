@@ -188,8 +188,6 @@ public class NaverMapController implements
                 // Nothing to do, the activity has been completely destroyed.
                 break;
             default:
-                throw new IllegalArgumentException(
-                        "Cannot interpret " + activityState.get() + " as an activity state");
         }
         activity.getApplication().registerActivityLifecycleCallbacks(this);
         mapView.getMapAsync(this);
