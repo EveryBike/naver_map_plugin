@@ -77,19 +77,26 @@ public func pxFromPt(_ pt: CGFloat) -> Int {
     return Int(pt * resolutionFactor)
 }
 
-var cachedOverlayImage = [String : NMFOverlayImage]()
+var cachedAssetOverlayImage = [String : NMFOverlayImage]()
 public func toOverlayImage(assetName: String, registrar: FlutterPluginRegistrar) -> NMFOverlayImage? {
-    let assetPath = registrar.lookupKey(forAsset: assetName)
-    return NMFOverlayImage(name: assetPath)
+    if (cachedAssetOverlayImage[assetName] != nil) {
+        return cachedAssetOverlayImage[assetName]
+    } else {
+        let assetPath = registrar.lookupKey(forAsset: assetName)
+        let oi = NMFOverlayImage(name: assetPath)
+        cachedAssetOverlayImage[assetName] = oi
+        return oi
+    }
+    
 }
-
+var cachedBitmapOverlayImage = [String : NMFOverlayImage]()
 public func toOverlayImageFromBitmap(bitmapCacheKey: String, bitmapBytes: FlutterStandardTypedData) -> NMFOverlayImage? {
-    if (cachedOverlayImage[bitmapCacheKey] != nil) {
-        return cachedOverlayImage[bitmapCacheKey]
+    if (cachedBitmapOverlayImage[bitmapCacheKey] != nil) {
+        return cachedBitmapOverlayImage[bitmapCacheKey]
     } else {
         guard let uiImage = UIImage(data: Data(bitmapBytes.data)) else { return nil }
         let oi = NMFOverlayImage(image: uiImage)
-        cachedOverlayImage[bitmapCacheKey] = oi
+        cachedBitmapOverlayImage[bitmapCacheKey] = oi
         return oi
     }
 }
