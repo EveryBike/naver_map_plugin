@@ -77,14 +77,21 @@ public func pxFromPt(_ pt: CGFloat) -> Int {
     return Int(pt * resolutionFactor)
 }
 
+var cachedOverlayImage = [String : NMFOverlayImage]()
 public func toOverlayImage(assetName: String, registrar: FlutterPluginRegistrar) -> NMFOverlayImage? {
     let assetPath = registrar.lookupKey(forAsset: assetName)
     return NMFOverlayImage(name: assetPath)
 }
 
-public func toOverlayImageFromBitmap(bitmapBytes: FlutterStandardTypedData) -> NMFOverlayImage? {
-    guard let uiImage = UIImage(data: Data(bitmapBytes.data)) else { return nil }
-    return NMFOverlayImage(image: uiImage)
+public func toOverlayImageFromBitmap(bitmapCacheKey: String, bitmapBytes: FlutterStandardTypedData) -> NMFOverlayImage? {
+    if (cachedOverlayImage[bitmapCacheKey] != nil) {
+        return cachedOverlayImage[bitmapCacheKey]
+    } else {
+        guard let uiImage = UIImage(data: Data(bitmapBytes.data)) else { return nil }
+        let oi = NMFOverlayImage(image: uiImage)
+        cachedOverlayImage[bitmapCacheKey] = oi
+        return oi
+    }
 }
 
 // ============================= 객체를 json 으로 =================================
