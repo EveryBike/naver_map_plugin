@@ -181,7 +181,8 @@ class NaverMarkerController {
             if (icon != null) marker.setIcon(Convert.toOverlayImage(icon));
 
             final Object bitmap = json.get("bitmap");
-            if (bitmap != null) marker.setIcon(Convert.toOverlayImageFromBitmap(bitmap));
+            final Object bitmapCacheKey = json.get("bitmapCacheKey");
+            if (bitmap != null) marker.setIcon(Convert.toOverlayImageFromBitmap(bitmapCacheKey, bitmap));
 
             final Object infoWindow = json.get("infoWindow");
             if (infoWindow != null) this.infoWindowText = (String)infoWindow;
