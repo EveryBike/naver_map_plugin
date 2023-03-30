@@ -42,7 +42,7 @@ class OverlayImage {
     final AssetImage assetImage = AssetImage(assetName);
     final AssetBundleImageKey key = await assetImage.obtainKey(_configuration);
 
-    return OverlayImage._(assetImage, key, null);
+    return OverlayImage._(assetImage, key, null, null);
   }
 
   static OverlayImage fromBitmap(String bitmapCacheKey, Uint8List bitmap) => OverlayImage._(null, null, bitmap, bitmapCacheKey);
