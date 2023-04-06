@@ -369,7 +369,7 @@ public class NaverMapController implements
             break;
             case "LO#set#icon": {
                 if (naverMap != null) {
-                    OverlayImage overlayImage = Convert.toOverlayImageFromBitmap(methodCall.argument("bitmap"));
+                    OverlayImage overlayImage = Convert.toOverlayImageFromBitmap(null, methodCall.argument("bitmap"));
                     naverMap.getLocationOverlay().setIcon(overlayImage);
                     result.success(null);
                 } else result.error("네이버맵 초기화 안됨.",
