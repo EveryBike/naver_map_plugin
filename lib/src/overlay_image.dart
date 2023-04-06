@@ -5,10 +5,11 @@ class OverlayImage {
   final AssetImage? image;
   final AssetBundleImageKey? key;
   final Uint8List? bitmap;
+  final String? bitmapCacheKey;
 
   get assetName => Platform.isIOS ? image?.assetName : key?.name;
 
-  const OverlayImage._(this.image, this.key, this.bitmap);
+  const OverlayImage._(this.image, this.key, this.bitmap, this.bitmapCacheKey);
 
   /// ## [assetName] 이미지 중 [configuration]에 맞는 이미지를 찾아 [OverlayImage]객체를 만든다.
   ///
@@ -41,8 +42,8 @@ class OverlayImage {
     final AssetImage assetImage = AssetImage(assetName);
     final AssetBundleImageKey key = await assetImage.obtainKey(_configuration);
 
-    return OverlayImage._(assetImage, key, null);
+    return OverlayImage._(assetImage, key, null, null);
   }
 
-  static OverlayImage fromBitmap(Uint8List bitmap) => OverlayImage._(null, null, bitmap);
+  static OverlayImage fromBitmap(String bitmapCacheKey, Uint8List bitmap) => OverlayImage._(null, null, bitmap, bitmapCacheKey);
 }

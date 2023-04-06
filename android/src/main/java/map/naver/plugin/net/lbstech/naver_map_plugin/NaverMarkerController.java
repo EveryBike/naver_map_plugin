@@ -42,22 +42,13 @@ class NaverMarkerController {
 
     void add(List jsonArray) {
         if (jsonArray == null || jsonArray.isEmpty()) return;
-        ExecutorService service = Executors.newCachedThreadPool();
-        service.execute(()->{
-            for (Object json : jsonArray) {
-                HashMap<String, Object> data = (HashMap<String, Object>) json;
-                MarkerController marker = new MarkerController(data);
-                marker.setOnClickListener(onClickListener);
-                idToController.put(marker.id, marker);
-            }
-            handler.post(()->{
-               List<MarkerController> markers = new ArrayList(idToController.values());
-                for (MarkerController marker : markers) {
-                    marker.setMap(naverMap);
-                }
-            });
-        });
-        service.shutdown();
+        for (Object json : jsonArray) {
+            HashMap<String, Object> data = (HashMap<String, Object>) json;
+            MarkerController marker = new MarkerController(data);
+            marker.setOnClickListener(onClickListener);
+            marker.setMap(naverMap);
+            idToController.put(marker.id, marker);
+        }
     }
 
     void remove(List jsonArray) {
@@ -65,8 +56,10 @@ class NaverMarkerController {
         for (Object json : jsonArray) {
             String id = (String) json;
             MarkerController marker = idToController.get(id);
-            marker.setOnClickListener(null);
-            marker.setMap(null);
+            if (marker != null) {
+                marker.setOnClickListener(null);
+                marker.setMap(null);
+            }
             idToController.remove(id);
         }
     }
@@ -188,7 +181,8 @@ class NaverMarkerController {
             if (icon != null) marker.setIcon(Convert.toOverlayImage(icon));
 
             final Object bitmap = json.get("bitmap");
-            if (bitmap != null) marker.setIcon(Convert.toOverlayImageFromBitmap(bitmap));
+            final Object bitmapCacheKey = json.get("bitmapCacheKey");
+            if (bitmap != null) marker.setIcon(Convert.toOverlayImageFromBitmap(bitmapCacheKey, bitmap));
 
             final Object infoWindow = json.get("infoWindow");
             if (infoWindow != null) this.infoWindowText = (String)infoWindow;
