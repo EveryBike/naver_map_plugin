@@ -26,6 +26,7 @@ import com.naver.maps.map.MapView;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.NaverMapOptions;
 import com.naver.maps.map.OnMapReadyCallback;
+import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.util.FusedLocationSource;
 
 import java.io.File;
@@ -364,6 +365,16 @@ public class NaverMapController implements
                 polygonController.modify(polygonToModify);
                 polygonController.remove(polygonToRemove);
                 result.success(null);
+            }
+            break;
+            case "LO#set#icon": {
+                if (naverMap != null) {
+                    OverlayImage overlayImage = Convert.toOverlayImageFromBitmap(methodCall.argument("bitmap"));
+                    naverMap.getLocationOverlay().setIcon(overlayImage);
+                    result.success(null);
+                } else result.error("네이버맵 초기화 안됨.",
+                        "네이버 지도가 생성되기 전에 이 메서드를 사용할 수 없습니다.",
+                        null);
             }
             break;
             case "LO#set#position": {

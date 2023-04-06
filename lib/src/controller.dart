@@ -250,6 +250,13 @@ class LocationOverlay {
     });
   }
 
+  /// 위치 오버레이의 이미지를 변경할 수 있습니다.
+  Future<void> setIcon(Uint8List bitmap) async {
+    _channel.invokeMethod("LO#set#icon", {
+      'bitmap': bitmap,
+    });
+  }
+
   /// __setBearing__ 을 이용하면 위치 오버레이의 베어링을 변경할 수 있습니다.
   /// flat이 true인 마커의 andgle속성과 유사하게 아이콘이 지도를 기준으로 회전합니다.
   /// > ***0.0은 정북쪽을 의미합니다.***

@@ -188,13 +188,15 @@ class Convert {
     private static final Map<Object, OverlayImage> cachedOverlayImage = new HashMap();
 
     static OverlayImage toOverlayImageFromBitmap(Object bitMapCacheKey, Object o) {
-        if (cachedOverlayImage.containsKey(bitMapCacheKey)) {
+        if (bitMapCacheKey != null && cachedOverlayImage.containsKey(bitMapCacheKey)) {
             return cachedOverlayImage.get(bitMapCacheKey);
         } else {
             byte[] bytes = (byte[]) o;
             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             OverlayImage oi = OverlayImage.fromBitmap(bitmap);
-            cachedOverlayImage.put(bitMapCacheKey, oi);
+            if (bitMapCacheKey != null) {
+                cachedOverlayImage.put(bitMapCacheKey, oi);
+            }
             return oi;
         }
     }
