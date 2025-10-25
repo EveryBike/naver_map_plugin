@@ -20,7 +20,7 @@ class _MarkerMapPageState extends State<MarkerMapPage> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
       OverlayImage.fromAssetImage(
         assetName: 'icon/marker.png',
         devicePixelRatio: window.devicePixelRatio,
